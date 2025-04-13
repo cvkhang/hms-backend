@@ -19,7 +19,7 @@ app.use(express.json());
     "room_number": "101",
     "room_floor": "1st Floor",
     "room_facility": "TV, Điều hòa",
-    "status": "Available",
+    "status": "vacant",
     "room_type_id": 1
   }
 */
@@ -63,7 +63,7 @@ app.get('/api/rooms', async (req, res) => {
     "room_number": "101",
     "room_floor": "1st Floor",
     "room_facility": "TV, Điều hòa",
-    "status": "Available",
+    "status": "vacant",
     "room_type_id": 1
   }
 */
@@ -109,6 +109,34 @@ app.delete('/api/rooms/:id', async (req, res) => {
   }
 });
 
+/*
+  API Endpoint: PATCH /api/rooms/:id/status
+  Cập nhật trạng thái phòng.
+  Body mẫu (JSON):
+  {
+    "status": "occupied"
+  }
+*/
+app.patch('/api/rooms/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const result = await db.query(queries.UPDATE_ROOM_STATUS, [status, id]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Phòng không tồn tại.' });
+    }
+
+    return res.status(200).json({
+      message: 'Trạng thái phòng đã được cập nhật thành công!',
+      room: result.rows[0],
+    });
+  } catch (error) {
+    console.error('Lỗi khi cập nhật trạng thái phòng:', error);
+    return res.status(500).json({ error: 'Lỗi server khi cập nhật trạng thái phòng.' });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running http://localhost:${port}`);

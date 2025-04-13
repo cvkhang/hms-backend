@@ -26,6 +26,14 @@ const UPDATE_ROOM = `
   RETURNING *;
 `;
 
+// Cập nhật trạng thái phòng
+const UPDATE_ROOM_STATUS = `
+  UPDATE rooms
+  SET status = $1
+  WHERE room_id = $2
+  RETURNING *;
+`;
+
 // Xóa phòng
 const DELETE_ROOM = `
   DELETE FROM rooms
