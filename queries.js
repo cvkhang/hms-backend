@@ -46,4 +46,5 @@ module.exports = {
   GET_ROOMS,
   UPDATE_ROOM,
   DELETE_ROOM,
+  UPDATE_ROOM_STATUS
 };
