@@ -1,7 +1,6 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 
-// Tạo pool kết nối
 const pool = new Pool({
   host: process.env.DB_HOST,     
   database: process.env.DB_NAME,
