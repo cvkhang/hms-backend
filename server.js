@@ -1,13 +1,9 @@
 const express = require('express');
 const db = require('./db'); 
 const queries = require('./queries'); 
-const serverless = require("serverless-http");
 
 const app = express();
 const port = 3000;
-
-// Export the serverless handler
-module.exports.handler = serverless(app);
 
 app.get('/', (req, res) => {
   res.send('Hello World!'); 
