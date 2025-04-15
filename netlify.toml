@@ -12,3 +12,6 @@
   from = "/*"
   to = "/.netlify/functions/server/:splat"
   status = 200
+
+[[plugins]]
+package = "@netlify/plugin-functions-install-core"
