@@ -1,8 +1,8 @@
 
 // Thêm phòng mới
 const CREATE_ROOM = `
-  INSERT INTO rooms (room_id, type_id, room_number, bed_type, room_floor, room_facility, room_status)
-  VALUES ($1, $2, $3, $4, $5, $6, $7)
+  INSERT INTO rooms (type_id, room_number, bed_type, room_floor, room_facility, room_status)
+  VALUES ($1, $2, $3, $4, $5, $6)
   RETURNING *;
 `;
 

@@ -16,7 +16,7 @@ app.use(express.json());
   Thêm phòng mới
   Body mẫu (JSON):
   {
-    "room_number": "101",
+    "room_id": "101",
     "room_floor": "1st Floor",
     "room_facility": "TV, Điều hòa",
     "status": "vacant",
@@ -25,8 +25,8 @@ app.use(express.json());
 */
 app.post('/api/rooms', async (req, res) => {
   try {
-    const { room_id, type_id, room_number, bed_type, room_floor, room_facility, room_status } = req.body;
-    const values = [room_id, type_id, room_number, bed_type, room_floor, room_facility, room_status];
+    const { type_id, room_number, bed_type, room_floor, room_facility, room_status } = req.body;
+    const values = [type_id, room_number, bed_type, room_floor, room_facility, room_status];
 
     const result = await db.query(queries.CREATE_ROOM, values);
     return res.status(201).json({
