@@ -25,8 +25,8 @@ app.use(express.json());
 */
 app.post('/api/rooms', async (req, res) => {
   try {
-    const { room_number, room_floor, room_facility, status, room_type_id } = req.body;
-    const values = [room_number, room_floor, room_facility, status, room_type_id];
+    const { room_id, type_id, room_number, bed_type, room_floor, room_facility, room_status } = req.body;
+    const values = [room_id, type_id, room_number, bed_type, room_floor, room_facility, room_status];
 
     const result = await db.query(queries.CREATE_ROOM, values);
     return res.status(201).json({
@@ -69,10 +69,10 @@ app.get('/api/rooms', async (req, res) => {
 */
 app.put('/api/rooms/:id', async (req, res) => {
   try {
-    const { id } = req.params;  // room_id
-    const { room_number, room_floor, room_facility, status, room_type_id } = req.body;
+    const { room_id } = req.params;  // room_id
+    const { type_id, room_number, bed_type, room_floor, room_facility, room_status } = req.body;
 
-    const values = [room_number, room_floor, room_facility, status, room_type_id, id];
+    const values = [room_id, type_id, room_number, bed_type, room_floor, room_facility, room_status];
     const result = await db.query(queries.UPDATE_ROOM, values);
 
     if (result.rowCount === 0) {
@@ -117,12 +117,12 @@ app.delete('/api/rooms/:id', async (req, res) => {
     "status": "occupied"
   }
 */
-app.patch('/api/rooms/:id/status', async (req, res) => {
+app.patch('/api/rooms/:room_id/room_status', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
+    const { room_id } = req.params;
+    const { room_status } = req.body;
 
-    const result = await db.query(queries.UPDATE_ROOM_STATUS, [status, id]);
+    const result = await db.query(queries.UPDATE_ROOM_STATUS, [room_id, room_status]);
 
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Phòng không tồn tại.' });

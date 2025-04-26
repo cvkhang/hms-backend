@@ -1,8 +1,8 @@
 
 // Thêm phòng mới
 const CREATE_ROOM = `
-  INSERT INTO rooms (room_number, room_floor, room_facility, status, room_type_id)
-  VALUES ($1, $2, $3, $4, $5)
+  INSERT INTO rooms (room_id, type_id, room_number, bed_type, room_floor, room_facility, room_status)
+  VALUES ($1, $2, $3, $4, $5, $6, $7)
   RETURNING *;
 `;
 
@@ -17,20 +17,21 @@ const GET_ROOMS = `
 const UPDATE_ROOM = `
   UPDATE rooms
   SET 
-    room_number   = $1,
-    room_floor    = $2,
-    room_facility = $3,
-    status        = $4,
-    room_type_id  = $5
-  WHERE room_id = $6
+    type_id     = $2,
+    room_number = $3,
+    bed_type    = $4,
+    room_floor  = $5,
+    room_facility = $6,
+    room_status = $7
+  WHERE room_id = $1
   RETURNING *;
 `;
 
 // Cập nhật trạng thái phòng
 const UPDATE_ROOM_STATUS = `
   UPDATE rooms
-  SET status = $1
-  WHERE room_id = $2
+  SET room_status = $2
+  WHERE room_id = $1
   RETURNING *;
 `;
 
