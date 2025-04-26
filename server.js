@@ -16,7 +16,7 @@ app.use(express.json());
   Thêm phòng mới
   Body mẫu (JSON):
   {
-    "room_id": "101",
+    "type_id": "1",
     "room_floor": "1st Floor",
     "room_facility": "TV, Điều hòa",
     "status": "vacant",
@@ -67,7 +67,7 @@ app.get('/api/rooms', async (req, res) => {
     "room_type_id": 1
   }
 */
-app.put('/api/rooms/:id', async (req, res) => {
+app.put('/api/rooms/:room_id', async (req, res) => {
   try {
     const { room_id } = req.params;  // room_id
     const { type_id, room_number, bed_type, room_floor, room_facility, room_status } = req.body;
