@@ -1,4 +1,4 @@
-https://github.com/cvkhang/hms-backend
+https://hms-backend-tsah.onrender.com/
 POST /api/rooms:                Thêm phòng mới.
 GET /api/rooms:                 Lấy danh sách phòng.
 PUT /api/rooms/:id:             Cập nhật thông tin phòng.
