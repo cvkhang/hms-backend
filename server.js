@@ -13,16 +13,28 @@ app.use(express.json());
 
 /*
   API Endpoint: POST /api/rooms
-  Thêm phòng mới
-  Body mẫu (JSON):
+  Chức năng: Thêm phòng mới vào hệ thống
+
+  Request body (JSON mẫu):
   {
     "type_id": "1",
+    "room_number": "101",
+    "bed_type": "Queen",
     "room_floor": "1st Floor",
     "room_facility": "TV, Điều hòa",
-    "status": "vacant",
-    "room_type_id": 1
+    "room_status": "Available"
   }
+
+  Giải thích:
+  - type_id: ID của loại phòng (tham chiếu đến bảng RoomTypes)
+  - room_number: Số phòng (phải là duy nhất)
+  - bed_type: Loại giường (Queen, Twin, King, Triple, Quad)
+  - room_floor: Tầng phòng (ví dụ: 1st)
+  - room_facility: Các tiện nghi đi kèm (ví dụ: TV, Điều hòa)
+  - room_status: Trạng thái phòng (Available, Booked, Reserved, Waitlist, Blocked)
+
 */
+
 app.post('/api/rooms', async (req, res) => {
   try {
     const { type_id, room_number, bed_type, room_floor, room_facility, room_status } = req.body;
@@ -56,16 +68,34 @@ app.get('/api/rooms', async (req, res) => {
 
 
 /*
-  API Endpoint: PUT /api/rooms/:id
-  Cập nhật thông tin phòng
-  Body mẫu (JSON):
+  API Endpoint: PUT /api/rooms/:room_id
+  Chức năng: Cập nhật thông tin phòng theo room_id
+
+  Request params:
+  - room_id: ID của phòng cần cập nhật (lấy từ URL params)
+
+  Request body (JSON mẫu):
   {
+    "type_id": "1",
     "room_number": "101",
+    "bed_type": "Queen",
     "room_floor": "1st Floor",
     "room_facility": "TV, Điều hòa",
-    "status": "vacant",
-    "room_type_id": 1
+    "room_status": "Available"
   }
+
+  Giải thích:
+  - type_id: ID loại phòng (tham chiếu đến bảng RoomTypes)
+  - room_number: Số phòng
+  - bed_type: Loại giường
+  - room_floor: Tầng phòng
+  - room_facility: Tiện nghi trong phòng
+  - room_status: Trạng thái phòng (Available, Booked, Reserved, Waitlist, Blocked)
+
+  Phản hồi:
+  - 200 OK: Nếu cập nhật thành công, trả về thông báo và thông tin phòng vừa được cập nhật.
+  - 404 Not Found: Nếu không tìm thấy phòng với room_id được cung cấp.
+  - 500 Internal Server Error: Nếu có lỗi xảy ra trong quá trình xử lý.
 */
 app.put('/api/rooms/:room_id', async (req, res) => {
   try {
@@ -110,11 +140,11 @@ app.delete('/api/rooms/:id', async (req, res) => {
 });
 
 /*
-  API Endpoint: PATCH /api/rooms/:id/status
+  API Endpoint: PATCH /api/rooms/:room_id/room_status
   Cập nhật trạng thái phòng.
   Body mẫu (JSON):
   {
-    "status": "occupied"
+    "room_status": "Available" (Available, Booked, Reserved, Waitlist, Blocked)
   }
 */
 app.patch('/api/rooms/:room_id/room_status', async (req, res) => {
